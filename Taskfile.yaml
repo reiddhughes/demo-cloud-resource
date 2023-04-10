@@ -1,0 +1,15 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  NODE_ENV: |
+    [ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.nvm";
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" --silent;
+    [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh";
+
+tasks:
+  install:
+    cmds:
+      - bash -c '{{ .NODE_ENV }} nvm install v19.8.1'
+    silent: true
