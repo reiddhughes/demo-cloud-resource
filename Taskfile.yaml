@@ -12,4 +12,18 @@ tasks:
   install:
     cmds:
       - bash -c '{{ .NODE_ENV }} nvm install v19.8.1'
-    silent: true
+
+  init:
+    cmds:
+      - aws cloudformation deploy --template-file Delivery.yml --stack-name CustomResourcesDelivery --no-fail-on-empty-changeset
+  
+  build:
+    cmds:
+      - mkdir -p .build
+      - zip -j .build/account.zip account/index.js
+      - zip -j .build/account-package.zip .build/account.zip account/schema.json account/.rpdk-config
+
+
+  deploy:
+    cmds:
+      - ./deploy.sh

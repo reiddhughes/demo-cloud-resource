@@ -1,0 +1,86 @@
+{
+    "typeName": "REIDDHUGHES::Demo::Account",
+    "description": "An AWS Account.",
+    "sourceUrl": "https://github.com/reiddhughes/demo-cloud-resource",
+    "documentationUrl": "https://github.com/reiddhughes/demo-cloud-resource",
+    "replacementStrategy": "create_then_delete",
+    "taggable": false,
+    "properties": {
+         "AccountName": {
+            "description": "The name of the Account",
+            "type": "string",
+            "pattern": "[a-z]+"
+        },
+        "AccountId": {
+            "description": "The identifier of the Account",
+            "type": "string",
+            "pattern": "[0-9]{12}"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "AccountName"
+    ],
+    "handlers": {
+        "create": {
+            "permissions": [
+                "dynamodb:GetItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "organizations:CreateAccount",
+                "organizations:DescribeAccount",
+                "organizations:ListAccounts",
+                "organizations:ListCreateAccountStatus"
+            ],
+            "timeoutInMinutes": 30
+        },
+        "read": {
+            "permissions": [
+                "dynamodb:GetItem",
+                "organizations:DescribeAccount",
+                "organizations:ListAccounts",
+                "organizations:ListCreateAccountStatus"
+            ],
+            "timeoutInMinutes": 5
+        },
+        "delete": {
+            "permissions": [
+                "dynamodb:GetItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "organizations:DescribeAccount",
+                "organizations:ListAccounts"
+            ],
+            "timeoutInMinutes": 5
+        },
+        "list": {
+            "permissions": [
+                "dynamodb:GetItem",
+                "organizations:DescribeAccount",
+                "organizations:ListAccounts",
+                "organizations:ListCreateAccountStatus"
+            ],
+            "timeoutInMinutes": 5
+        }
+    },
+    "readOnlyProperties": [
+        "/properties/AccountId"
+    ],
+    "createOnlyProperties": [
+        "/properties/AccountName"
+    ],
+    "primaryIdentifier": [
+        "/properties/AccountName"
+    ],
+    "additionalIdentifiers": [
+        [
+            "/properties/AccountId"
+        ]
+    ],
+    "resourceLink": {
+      "templateUri": "https://us-east-1.console.aws.amazon.com/organizations/v2/home/accounts/${AccountId}",
+      "mappings": {
+        "AccountId": "/AccountId"
+      }
+    }
+}

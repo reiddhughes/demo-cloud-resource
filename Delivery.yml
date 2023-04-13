@@ -1,0 +1,9 @@
+---
+
+Resources:
+
+  CustomResourcePackageBucketV1:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    Properties:
+      BucketName: !Sub "reiddhughes-custom-resource-packages-v1-${AWS::Region}"
